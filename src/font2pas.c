@@ -25,6 +25,26 @@
  * 3. This notice may not be removed or altered from any source distribution. *
  *                                                                            *
  *****************************************************************************/
+
+// This program is used to convert font data from BDF, BIN and HEX files to a 
+// Pascal unit with two arrays: one for the bitmaps (16 bytes with 8x16 pixels 
+// or 16 words with 16x16 pixels) and one for the map of the bitmaps (131072
+// signed int32's with the index of the bitmap for each character), where
+// negative means 16x16 pixels, positive means 8x16 pixels and -0x80000000 means
+// no bitmap. The output is written to a file "VGAFont.pas".
+
+// It needs the following files:
+// - u_vga16.bdf: 
+//     Uni-VGA 8x16 font as primary source (8x16 pixels)
+//     Source: https://www.inp.nsk.su/~bolkhov/files/fonts/univga/
+// - unscii-16.hex:
+//     Unscii 8x16 font with some 16x16 characters (wide characters) for second order fill-in of some missing characters
+//     Source: https://github.com/viznut/unscii
+// - vga.bin: 
+//     VGA 8x16 font from the original IBM VGA ROM (8x16 pixels) for the first 256 characters to be used as a first-order 
+//     fill-in of some missing characters, especially for the first 32 characters
+//     It's provided in this repository 
+
 #include "stdint.h"
 #include "stdio.h"
 #include "stdlib.h"
